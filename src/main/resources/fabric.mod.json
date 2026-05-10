@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "no-creative",
+	"version": "${version}",
+	"name": "No Creative!",
+	"description": "Prevent players from switching to creative",
+	"authors": [
+		"sctech"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/no-creative",
+		"sources": "https://github.com/sctech-tr/no-creative"
+	},
+	"license": "MIT",
+	"icon": "assets/no-creative/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"tr.sc22.nocreative.NoCreative"
+		]
+	},
+	"mixins": [
+		"no-creative.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
