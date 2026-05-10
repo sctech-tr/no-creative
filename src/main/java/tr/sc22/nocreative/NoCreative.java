@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
+import net.minecraft.network.chat.Component;
 
 public class NoCreative implements ModInitializer {
 
@@ -13,17 +14,22 @@ public class NoCreative implements ModInitializer {
 
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 
-			for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+			GameType worldMode = server.getWorldData().getGameType();
+			boolean hardcore = server.getWorldData().isHardcore();
 
-				if (player.gameMode.getGameModeForPlayer() == GameType.CREATIVE) {
+			if (worldMode == GameType.SURVIVAL || hardcore) {
 
-					player.setGameMode(GameType.SURVIVAL);
+				for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 
-					player.sendSystemMessage(
-							net.minecraft.network.chat.Component.literal(
-									"Creative mode disabled."
-							)
-					);
+					if (player.gameMode.getGameModeForPlayer() == GameType.CREATIVE) {
+
+						player.setGameMode(GameType.SURVIVAL);
+
+						player.sendSystemMessage(
+								Component.literal("Creative disabled in this world."),
+								false
+						);
+					}
 				}
 			}
 		});
